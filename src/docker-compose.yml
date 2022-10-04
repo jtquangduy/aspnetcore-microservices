@@ -58,3 +58,4 @@ volumes:
     name: mongo_data
   pgadmin_data:
     name: pgadmin_data
+  
