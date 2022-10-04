@@ -1,4 +1,4 @@
-﻿  version: '3.8'
+﻿version: '3.8'
 
 services: 
   #database section
@@ -13,7 +13,8 @@ services:
     ports:
       - "1435:1433"
     volumes:
-      - sqlserver_data:/var/lib/sqlserver/data 
+      - sqlserver_data:/var/lib/sqlserver/data
+    
   
   #productdb: mysql
   productdb:
@@ -25,6 +26,7 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    
   
   #customerdb: postgres
   customerdb:
@@ -38,6 +40,7 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    
   
   #basketdb: redis
   basketdb:
@@ -45,6 +48,7 @@ services:
     restart: always
     ports:
       - "6379:6379"
+    
   
   #inventorydb: mongo
   inventorydb:
@@ -53,7 +57,8 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - mongo_data:/data/db 
+      - mongo_data:/data/db
+    
   
   #infrasructure section
   rabbitmq:
@@ -62,6 +67,7 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    
   
   pgadmin:
     container_name: pgadmin
@@ -73,7 +79,8 @@ services:
       - "5050:80"
     volumes:
       - pgadmin_data:/root/.pgadmin
- 
+    
+  
   portainer:
     container_name: portainer
     restart: always
@@ -94,7 +101,8 @@ services:
     ports:
       - "9200:9200"
     volumes:
-      - elasticsearch_data:/usr/share/elasticsearch/data  
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    
   
   kibana:
     container_name: kibana
@@ -104,5 +112,19 @@ services:
       - elasticsearch
     ports:
       - "5601:5601"
-      - 
+
+  #microservices api sections
+  product.api:
+    container_name: product.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - "ConnectionStrings:DefaultConnectionString=Server=productdb;Port=3306;Database=ProductDB;Uid=root;Pwd=Passw0rd!;"
+    depends_on:
+      - productdb
+    ports:
+      - "6002:80"
+    restart: always  
     
+
+
