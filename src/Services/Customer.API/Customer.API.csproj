@@ -27,10 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers" />
       <Folder Include="Migrations" />
-      <Folder Include="Repositories\Interfaces" />
-      <Folder Include="Services\Interfaces" />
     </ItemGroup>
 
 </Project>

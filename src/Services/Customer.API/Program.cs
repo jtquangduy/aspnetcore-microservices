@@ -1,5 +1,12 @@
 using Common.Logging;
+using Contracts.Common.Interfaces;
+using Customer.API.Controllers;
 using Customer.API.Persistence;
+using Customer.API.Repositories;
+using Customer.API.Repositories.Interfaces;
+using Customer.API.Services;
+using Customer.API.Services.Interfaces;
+using Infrastructure.Common;
 using Microsoft.EntityFrameworkCore;
 using Product.API.Extensions;
 using Serilog;
@@ -25,7 +32,18 @@ try
 
     builder.Services.AddDbContext<CustomerContext>(options => options.UseNpgsql(connectionString));
 
+    builder.Services.AddScoped<ICustomerRepository, CustomerRepository>()
+        .AddScoped(typeof(IRepositoryBaseAsync<,,>), typeof(RepositoryBaseAsync<,,>))
+        .AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>))
+        .AddScoped<ICustomerService, CustomerService>();
+
     var app = builder.Build();
+
+    app.MapGet("/", () => "Welcome to Customer API!");
+    
+    app.MapCustomersAPI();
+
+    app.MapControllers();
 
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
