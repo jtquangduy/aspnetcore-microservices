@@ -15,7 +15,7 @@ public class CustomerService : ICustomerService
         _mapper = mapper;
     }
 
-    public async Task<IResult> GetCustomerByUsernameAsync(string username)
+    public async Task<IResult> GetCustomerByUserNameAsync(string username)
     {
         var entity = await _repository.GetCustomerByUserNameAsync(username);
         var result = _mapper.Map<CustomerDto>(entity);

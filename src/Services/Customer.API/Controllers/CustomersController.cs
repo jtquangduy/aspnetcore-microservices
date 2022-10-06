@@ -9,7 +9,7 @@ public static class CustomersController
         app.MapGet("/api/customers/{username}",
             async (string username, ICustomerService customerService) =>
             {
-                var result = await customerService.GetCustomerByUsernameAsync(username);
+                var result = await customerService.GetCustomerByUserNameAsync(username);
                 return result != null ? Results.Ok(result) : Results.NotFound();
             });
     }

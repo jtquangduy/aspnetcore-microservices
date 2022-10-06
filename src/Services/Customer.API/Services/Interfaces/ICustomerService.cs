@@ -2,5 +2,5 @@
 
 public interface ICustomerService
 {
-    Task<IResult> GetCustomerByUsernameAsync(string username);
+    Task<IResult> GetCustomerByUserNameAsync(string username);
 }
