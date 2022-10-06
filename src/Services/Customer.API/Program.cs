@@ -8,7 +8,6 @@ using Customer.API.Services;
 using Customer.API.Services.Interfaces;
 using Infrastructure.Common;
 using Microsoft.EntityFrameworkCore;
-using Product.API.Extensions;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,11 +17,10 @@ Log.Information("Start Customer API up");
 
 try
 {
-    builder.Host.UseSerilog(Serilogger.Configure);
-    builder.Host.AddAppConfigurations();
     // Add services to the container.
-
+    builder.Host.UseSerilog(Serilogger.Configure);
     builder.Services.AddControllers();
+    
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
