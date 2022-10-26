@@ -7,11 +7,12 @@ namespace Customer.API.Services;
 
 public class CustomerService : ICustomerService
 {
-    private readonly ICustomerRepository _repository;
     private readonly IMapper _mapper;
+    private readonly ICustomerRepository _repository;
+
     public CustomerService(ICustomerRepository repository, IMapper mapper)
     {
-        _repository = repository;        
+        _repository = repository;
         _mapper = mapper;
     }
 

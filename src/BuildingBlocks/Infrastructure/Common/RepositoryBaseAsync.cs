@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using Contracts.Common.Interfaces;
+﻿using Contracts.Common.Interfaces;
 using Contracts.Domains;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -18,6 +17,7 @@ public class RepositoryBase<T, K, TContext> : RepositoryQueryBase<T, K, TContext
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
+
     public Task<IDbContextTransaction> BeginTransactionAsync()
     {
         return _dbContext.Database.BeginTransactionAsync();

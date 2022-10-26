@@ -11,8 +11,8 @@ namespace Product.API.Controllers;
 [Route("api/[controller]")]
 public class ProductsController : ControllerBase
 {
-    private readonly IProductRepository _repository;
     private readonly IMapper _mapper;
+    private readonly IProductRepository _repository;
 
     public ProductsController(IProductRepository repository, IMapper mapper)
     {
@@ -20,7 +20,23 @@ public class ProductsController : ControllerBase
         _mapper = mapper;
     }
 
+    #region Additional Resources
+
+    [HttpGet("get-product-by-no/{productNo}")]
+    public async Task<IActionResult> GetProductByNo([Required] string productNo)
+    {
+        var product = await _repository.GetProductByNo(productNo);
+        if (product == null)
+            return NotFound();
+
+        var result = _mapper.Map<ProductDto>(product);
+        return Ok(result);
+    }
+
+    #endregion
+
     #region CRUD
+
     [HttpGet]
     public async Task<IActionResult> GetProducts()
     {
@@ -35,7 +51,7 @@ public class ProductsController : ControllerBase
         var product = await _repository.GetProduct(id);
         if (product == null)
             return NotFound();
- 
+
         var result = _mapper.Map<ProductDto>(product);
         return Ok(result);
     }
@@ -45,7 +61,7 @@ public class ProductsController : ControllerBase
     {
         var productEntity = await _repository.GetProductByNo(productDto.No);
         if (productEntity != null) return BadRequest($"Product No: {productDto.No} is existed");
-        
+
         var product = _mapper.Map<CatalogProduct>(productDto);
         await _repository.CreateProduct(product);
         await _repository.SaveChangesAsync();
@@ -78,21 +94,6 @@ public class ProductsController : ControllerBase
         await _repository.SaveChangesAsync();
         return NoContent();
     }
+
     #endregion
-
-    #region Additional Resources
-
-    [HttpGet("get-product-by-no/{productNo}")]
-
-    public async Task<IActionResult> GetProductByNo([Required] string productNo)
-    {
-        var product = await _repository.GetProductByNo(productNo);
-        if (product == null)
-            return NotFound();
-
-        var result = _mapper.Map<ProductDto>(product);
-        return Ok(result);
-    }
-    #endregion
-
 }

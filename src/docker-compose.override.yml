@@ -1,6 +1,6 @@
 ﻿version: '3.8'
 
-services: 
+services:
   #database section
   
   #orderdb: sql server
@@ -14,7 +14,7 @@ services:
       - "1435:1433"
     volumes:
       - sqlserver_data:/var/lib/sqlserver/data
-    
+  
   
   #productdb: mysql
   productdb:
@@ -26,7 +26,7 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-    
+  
   
   #customerdb: postgres
   customerdb:
@@ -40,7 +40,7 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    
+  
   
   #basketdb: redis
   basketdb:
@@ -48,7 +48,7 @@ services:
     restart: always
     ports:
       - "6379:6379"
-    
+  
   
   #inventorydb: mongo
   inventorydb:
@@ -58,7 +58,7 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
-    
+  
   
   #infrasructure section
   rabbitmq:
@@ -67,7 +67,7 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
-    
+  
   
   pgadmin:
     container_name: pgadmin
@@ -79,7 +79,7 @@ services:
       - "5050:80"
     volumes:
       - pgadmin_data:/root/.pgadmin
-    
+  
   
   portainer:
     container_name: portainer
@@ -102,13 +102,13 @@ services:
       - "9200:9200"
     volumes:
       - elasticsearch_data:/usr/share/elasticsearch/data
-    
+  
   
   kibana:
     container_name: kibana
     environment:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
-    depends_on: 
+    depends_on:
       - elasticsearch
     ports:
       - "5601:5601"
@@ -124,8 +124,8 @@ services:
       - productdb
     ports:
       - "6002:80"
-    restart: always  
-    
+    restart: always
+  
   customer.api:
     container_name: customer.api
     environment:

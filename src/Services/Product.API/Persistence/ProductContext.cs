@@ -18,7 +18,7 @@ public class ProductContext : DbContext
         modelBuilder.Entity<CatalogProduct>().HasIndex(x => x.No).IsUnique();
     }
 
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
     {
         var modified = ChangeTracker.Entries()
             .Where(e => e.State == EntityState.Modified ||
@@ -26,7 +26,6 @@ public class ProductContext : DbContext
                         e.State == EntityState.Deleted);
 
         foreach (var item in modified)
-        {
             switch (item.State)
             {
                 case EntityState.Added:
@@ -35,6 +34,7 @@ public class ProductContext : DbContext
                         addedEntity.CreatedDate = DateTime.UtcNow;
                         item.State = EntityState.Added;
                     }
+
                     break;
 
                 case EntityState.Modified:
@@ -44,9 +44,9 @@ public class ProductContext : DbContext
                         modifiedEntity.LastModifiedDate = DateTime.UtcNow;
                         item.State = EntityState.Modified;
                     }
-                    break; 
+
+                    break;
             }
-        }
 
         return base.SaveChangesAsync(cancellationToken);
     }

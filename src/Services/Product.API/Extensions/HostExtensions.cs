@@ -17,14 +17,13 @@ public static class HostExtensions
             {
                 logger.LogInformation("Migrating mysql database.");
                 ExecuteMigrations(context);
-                
+
                 logger.LogInformation("Migrated mysql database.");
                 InvokeSeeder(seeder, context, services);
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "An error occurred while migrating the mysql database");
-
             }
         }
 

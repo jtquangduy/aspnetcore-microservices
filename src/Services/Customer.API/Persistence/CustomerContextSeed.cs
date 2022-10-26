@@ -11,13 +11,16 @@ public static class CustomerContextSeed
             .GetRequiredService<CustomerContext>();
         customerContext.Database.MigrateAsync().GetAwaiter().GetResult();
 
-        CreateCustomer(customerContext, "customer1", "customer1", "customer", "customer1@local.com").GetAwaiter().GetResult();
-        CreateCustomer(customerContext, "customer2", "customer2", "customer", "customer2@local.com").GetAwaiter().GetResult();
+        CreateCustomer(customerContext, "customer1", "customer1", "customer", "customer1@local.com").GetAwaiter()
+            .GetResult();
+        CreateCustomer(customerContext, "customer2", "customer2", "customer", "customer2@local.com").GetAwaiter()
+            .GetResult();
 
         return host;
     }
 
-    private static async Task CreateCustomer(CustomerContext customerContext, string username, string firstName, string lastName, string email)
+    private static async Task CreateCustomer(CustomerContext customerContext, string username, string firstName,
+        string lastName, string email)
     {
         var customer = await customerContext.Customers.SingleOrDefaultAsync(x => x.UserName.Equals(username));
         if (customer == null)
@@ -32,6 +35,5 @@ public static class CustomerContextSeed
             await customerContext.Customers.AddAsync(newCustomer);
             await customerContext.SaveChangesAsync();
         }
-
     }
 }

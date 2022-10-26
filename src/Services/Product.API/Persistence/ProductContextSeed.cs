@@ -15,7 +15,7 @@ public class ProductContextSeed
                 nameof(ProductContext));
         }
     }
-    
+
     private static IEnumerable<CatalogProduct> getCatalogProducts()
     {
         return new List<CatalogProduct>

@@ -1,6 +1,6 @@
 version: '3.8'
 
-services: 
+services:
   #database section
   orderdb:
     image: mcr.microsoft.com/mssql/server:2019-latest
@@ -32,8 +32,8 @@ services:
   
   kibana:
     image: docker.elastic.co/kibana/kibana:7.17.2
-    
-    
+  
+  
   #microservices api section
   product.api:
     image: ${DOCKER_REGISTRY-}product-api:${PLATFORM:-linux}-${TAG:-latest}
@@ -54,7 +54,7 @@ networks:
     driver: bridge
 
 #volumes section
-volumes: 
+volumes:
   sqlserver_data:
     name: sqlserver_data
   mysql_data:

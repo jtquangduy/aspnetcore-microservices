@@ -13,13 +13,8 @@ public static class AutoMapperExtensions
         var destinationProperties = typeof(TDestination).GetProperties();
 
         foreach (var property in destinationProperties)
-        {
             if (sourceType.GetProperty(property.Name, flags) == null)
-            {
                 expression.ForMember(property.Name, opt => opt.Ignore());
-            }
-
-        }
         return expression;
     }
 }
