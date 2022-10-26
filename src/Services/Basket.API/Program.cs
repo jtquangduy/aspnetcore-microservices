@@ -1,3 +1,4 @@
+using Basket.API.Extensions;
 using Common.Logging;
 using Serilog;
 
@@ -13,6 +14,7 @@ try
 {
     // Add services to the container.
     builder.Host.UseSerilog(Serilogger.Configure);
+    builder.Host.AddAppConfigurations();
     builder.Services.Configure<RouteOptions>(options
         => options.LowercaseUrls = true);
 
