@@ -6,8 +6,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Product.API.Migrations
 {
+    /// <inheritdoc />
     public partial class Init_ProductDB : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterDatabase()
@@ -42,6 +44,7 @@ namespace Product.API.Migrations
                 unique: true);
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

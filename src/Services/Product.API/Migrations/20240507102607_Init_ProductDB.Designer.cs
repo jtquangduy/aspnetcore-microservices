@@ -11,14 +11,15 @@ using Product.API.Persistence;
 namespace Product.API.Migrations
 {
     [DbContext(typeof(ProductContext))]
-    [Migration("20221004103842_Init_ProductDB")]
+    [Migration("20240507102607_Init_ProductDB")]
     partial class Init_ProductDB
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.6")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Product.API.Entities.CatalogProduct", b =>
