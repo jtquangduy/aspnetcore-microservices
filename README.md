@@ -67,7 +67,7 @@ docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d --remo
 
 ## Install Environment
 
-- https://dotnet.microsoft.com/download/dotnet/6.0
+- https://dotnet.microsoft.com/download/dotnet/8.0
 - https://visualstudio.microsoft.com/
 
 ## References URLS
