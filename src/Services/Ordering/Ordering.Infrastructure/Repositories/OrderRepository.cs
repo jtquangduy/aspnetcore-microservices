@@ -1,7 +1,7 @@
 ﻿using Contracts.Common.Interfaces;
 using Infrastructure.Common;
 using Microsoft.EntityFrameworkCore;
-using Ordering.Appication.Common.Interfaces;
+using Ordering.Application.Common.Interfaces;
 using Ordering.Domain.Enities;
 using Ordering.Infrastructure.Persistence;
 

@@ -1,4 +1,4 @@
-﻿namespace Ordering.Appication.Common.Exceptions
+﻿namespace Ordering.Application.Common.Exceptions
 {
     public class NotFoundException : Exception
     {

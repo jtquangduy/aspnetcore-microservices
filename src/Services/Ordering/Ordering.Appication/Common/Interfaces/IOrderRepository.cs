@@ -1,7 +1,7 @@
 ﻿using Contracts.Common.Interfaces;
 using Ordering.Domain.Enities;
 
-namespace Ordering.Appication.Common.Interfaces
+namespace Ordering.Application.Common.Interfaces
 {
     public interface IOrderRepository : IRepositoryBaseAsync<Order, long>
     {

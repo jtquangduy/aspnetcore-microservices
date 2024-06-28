@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Ordering.Appication.Common.Behaviours;
+using Ordering.Application.Common.Behaviours;
 using System.Reflection;
 
-namespace Ordering.Appication
+namespace Ordering.Application
 {
     public static class ConfigureServices
     {

@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using Ordering.Appication.Common.Models;
+using Ordering.Application.Common.Models;
 using Shared.SeedWork;
 
-namespace Ordering.Appication.Features.V1.Orders.GetOrders
+namespace Ordering.Application.Features.V1.Orders.GetOrders
 {
     public class GetOrdersQuery : IRequest<ApiResult<List<OrderDto>>>
     {

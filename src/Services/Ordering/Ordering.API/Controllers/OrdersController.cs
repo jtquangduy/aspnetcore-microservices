@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Ordering.Appication.Common.Models;
-using Ordering.Appication.Features.V1.Orders.GetOrders;
+using Ordering.Application.Common.Models;
+using Ordering.Application.Features.V1.Orders.GetOrders;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 

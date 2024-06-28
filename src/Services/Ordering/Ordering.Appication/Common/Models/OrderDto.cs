@@ -1,7 +1,7 @@
-﻿using Ordering.Appication.Common.Mappings;
+﻿using Ordering.Application.Common.Mappings;
 using Ordering.Domain.Enities;
 
-namespace Ordering.Appication.Common.Models
+namespace Ordering.Application.Common.Models
 {
     public class OrderDto : IMapFrom<Order>
     {

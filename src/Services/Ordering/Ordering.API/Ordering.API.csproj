@@ -21,7 +21,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\BuildingBlocks\Common.Logging\Common.Logging.csproj" />
-      <ProjectReference Include="..\Ordering.Appication\Ordering.Appication.csproj" />
+      <ProjectReference Include="..\Ordering.Appication\Ordering.Application.csproj" />
       <ProjectReference Include="..\Ordering.Infrastructure\Ordering.Infrastructure.csproj" />
     </ItemGroup>
 

@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
-using Ordering.Appication.Common.Interfaces;
-using Ordering.Appication.Common.Models;
+using Ordering.Application.Common.Interfaces;
+using Ordering.Application.Common.Models;
 using Serilog;
 using Shared.SeedWork;
 
-namespace Ordering.Appication.Features.V1.Orders.GetOrders
+namespace Ordering.Application.Features.V1.Orders.GetOrders
 {
     public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, ApiResult<List<OrderDto>>>
     {
