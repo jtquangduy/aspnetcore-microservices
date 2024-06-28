@@ -36,10 +36,12 @@ try
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "Unhandled exception");
+    var type = ex.GetType().Name;
+    if (type.Equals("StopTheHostException", StringComparison.Ordinal)) throw;
+    Log.Fatal(ex, $"Unhandled exception: {ex.Message}");
 }
 finally
 {
-    Log.Information("Shut down Ordering API complete");
+    Log.Information($"Shutdown {builder.Environment.ApplicationName} complete");
     Log.CloseAndFlush();
 }
