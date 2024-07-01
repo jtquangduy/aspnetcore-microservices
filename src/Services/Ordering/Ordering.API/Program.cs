@@ -18,6 +18,7 @@ try
 {
     // Add services to the container.
     builder.Host.AddAppConfigurations();
+    builder.Services.AddConfigurationSettings(builder.Configuration);
     builder.Services.AddApplicationServices();
     builder.Services.AddInfrastructureServices(builder.Configuration);
 
@@ -33,8 +34,8 @@ try
     {
         app.UseSwagger();
         app.UseSwaggerUI(c =>
-                c.SwaggerEndpoint("/swagger/v1/swagger.json",
-                    "Swagger Order API v1"));
+            c.SwaggerEndpoint("/swagger/v1/swagger.json",
+                "Swagger Order API v1"));
     }
 
     // Initialise and seed database
