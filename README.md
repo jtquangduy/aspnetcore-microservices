@@ -92,3 +92,8 @@ docker-compose down
 - dotnet watch run --environment "Development"
 - dotnet restore
 - dotnet build
+- Migration commands:
+  - dotnet ef migrations add "SampleMigration" --project {project dir} --startup-project {project dir} --output-dir Persistence\Migrations
+  - dotnet ef migrations add "Init_OrderDB" --project Ordering.Infrastructure --startup-project Ordering.API --output-dir Persistence\Migrations
+  - dotnet ef database update --project Ordering.Infrastructure --startup-project Ordering.API
+  - CD into Ordering folder: dotnet ef remove -p Ordering.Infrastructure --startup-project Ordering.API
