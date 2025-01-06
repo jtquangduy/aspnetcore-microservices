@@ -9,7 +9,7 @@ services:
     image: mysql:8.0.36
 
   customerdb:
-    image: postgres:alpine3.19
+    image: postgres:latest
 
   basketdb:
     image: redis:alpine

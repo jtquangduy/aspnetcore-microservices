@@ -1,12 +1,31 @@
 ﻿using Basket.API.Repositories;
 using Basket.API.Repositories.Interfaces;
 using Contracts.Common.Interfaces;
+using EventBus.Messages.IntegrationEvent.Events;
 using Infrastructure.Common;
+using Infrastructure.Extensions;
+using MassTransit;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Shared.Configurations;
 
 namespace Basket.API.Extensions;
 
 public static class ServiceExtensions
 {
+    internal static IServiceCollection AddConfigurationSettings(this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        var eventBusSettings = configuration.GetSection(nameof(EventBusSettings)).Get<EventBusSettings>();
+
+        services.AddSingleton(eventBusSettings);
+
+        var cacheSettings = configuration.GetSection(nameof(CacheSettings)).Get<CacheSettings>();
+
+        services.AddSingleton(cacheSettings);
+
+        return services;
+    }
+
     public static IServiceCollection ConfigureServices(this IServiceCollection services)
     {
         return services.AddScoped<IBasketRepository, BasketRepository>()
@@ -15,11 +34,32 @@ public static class ServiceExtensions
 
     public static void ConfigureRedis(this IServiceCollection services, IConfiguration configuration)
     {
-        var redisConnectionString = configuration.GetSection("CacheSettings:ConnectionString").Value;
-        if (string.IsNullOrEmpty(redisConnectionString))
+        var settings = services.GetOption<CacheSettings>("CacheSettings");
+        if (string.IsNullOrEmpty(settings.ConnectionString))
             throw new ArgumentNullException("Redis Connection string is not configured.");
 
         //Redis Configuration
-        services.AddStackExchangeRedisCache(options => { options.Configuration = redisConnectionString; });
+        services.AddStackExchangeRedisCache(options => { options.Configuration = settings.ConnectionString; });
+    }
+
+    public static void ConfigureMassTransit(this IServiceCollection services)
+    {
+        var settings = services.GetOption<EventBusSettings>("EventBusSettings");
+        if (settings == null || string.IsNullOrEmpty(settings.HostAddress))
+            throw new ArgumentNullException("EventBusSettings is not configured.");
+
+        var mqConnection = new Uri(settings.HostAddress);
+        services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
+        //"BasketCheckoutEventQueue" => "basket-checout-event-queue"
+        services.AddMassTransit(config =>
+        {
+            config.UsingRabbitMq((ctx, cfg) =>
+            {
+                cfg.Host(mqConnection);
+            });
+
+            // Publish submit order message
+            config.AddRequestClient<IBasketCheckoutEvent>();
+        });
     }
 }
