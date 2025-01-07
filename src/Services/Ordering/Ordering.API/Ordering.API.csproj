@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.5" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -22,6 +23,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\BuildingBlocks\Common.Logging\Common.Logging.csproj" />
+      <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBus.Messages\EventBus.Messages.csproj" />
       <ProjectReference Include="..\Ordering.Appication\Ordering.Application.csproj" />
       <ProjectReference Include="..\Ordering.Infrastructure\Ordering.Infrastructure.csproj" />
     </ItemGroup>

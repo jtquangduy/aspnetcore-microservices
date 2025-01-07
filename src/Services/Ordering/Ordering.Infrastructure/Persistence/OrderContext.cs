@@ -1,6 +1,6 @@
 ﻿using Contracts.Domains.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Ordering.Domain.Enities;
+using Ordering.Domain.Entities;
 using System.Reflection;
 
 namespace Ordering.Infrastructure.Persistence

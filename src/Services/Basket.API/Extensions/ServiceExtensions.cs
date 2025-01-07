@@ -6,6 +6,7 @@ using Infrastructure.Common;
 using Infrastructure.Extensions;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Ordering.API.Application.IntegrationEvents.EventsHandler;
 using Shared.Configurations;
 
 namespace Basket.API.Extensions;
@@ -53,6 +54,7 @@ public static class ServiceExtensions
         //"BasketCheckoutEventQueue" => "basket-checout-event-queue"
         services.AddMassTransit(config =>
         {
+            config.AddConsumersFromNamespaceContaining<BasketCheckoutEventHandler>();
             config.UsingRabbitMq((ctx, cfg) =>
             {
                 cfg.Host(mqConnection);

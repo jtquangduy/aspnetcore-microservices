@@ -7,7 +7,7 @@ public class CreateOrUpdateValidator : AbstractValidator<CreateOrUpdateCommand>
     public CreateOrUpdateValidator()
     {
         RuleFor(p => p.FirstName)
-            .NotEmpty().WithMessage("{FirstName} is required.}")
+            .NotEmpty().WithMessage("{FirstName} is required.")
             .NotNull()
             .MaximumLength(50).WithMessage("{FirstName} must not exceed 50 characters.");
 

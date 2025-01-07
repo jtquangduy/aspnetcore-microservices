@@ -2,7 +2,7 @@
 using Contracts.Services;
 using MediatR;
 using Ordering.Application.Common.Interfaces;
-using Ordering.Domain.Enities;
+using Ordering.Domain.Entities;
 using Serilog;
 using Shared.SeedWork;
 using Shared.Shared.Services.Email;
@@ -16,7 +16,9 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Api
     private readonly ISmtpEmailService _emailService;
     private readonly ILogger _logger;
 
-    public CreateOrderCommandHandler(IOrderRepository orderRepository, IMapper mapper, ISmtpEmailService emailService,
+    public CreateOrderCommandHandler(IOrderRepository orderRepository,
+        IMapper mapper,
+        ISmtpEmailService emailService,
         ILogger logger)
     {
         _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
@@ -34,9 +36,7 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Api
         var addedOrder = await _orderRepository.CreateOrderAsync(orderEntity);
         await _orderRepository.SaveChangesAsync();
         _logger.Information($"Order {addedOrder.Id} is successfully created.");
-
         SendEmailAsync(addedOrder, cancellationToken);
-
         _logger.Information($"END: {MethodName} - Username: {request.UserName}");
         return new ApiSuccessResult<long>(addedOrder.Id);
     }
@@ -46,10 +46,9 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Api
         var emailRequest = new MailRequest
         {
             ToAddress = order.EmailAddress,
-            Body = "Body was created.",
-            Subject = "Order was Created",
+            Body = "Order was created.",
+            Subject = "Order was created"
         };
-
         try
         {
             await _emailService.SendEmailAsync(emailRequest, cancellationToken);

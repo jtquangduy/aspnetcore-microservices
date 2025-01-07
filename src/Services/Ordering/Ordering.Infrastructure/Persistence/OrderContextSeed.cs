@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Ordering.Domain.Enities;
+using Ordering.Domain.Entities;
 using Serilog;
 
 namespace Ordering.Infrastructure.Persistence

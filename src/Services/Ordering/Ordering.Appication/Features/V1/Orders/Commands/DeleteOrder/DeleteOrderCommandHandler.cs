@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Ordering.Application.Common.Exceptions;
 using Ordering.Application.Common.Interfaces;
-using Ordering.Domain.Enities;
+using Ordering.Domain.Entities;
 using Serilog;
 
 namespace Ordering.Application.Features.V1.Orders.Commands.DeleteOrder;
@@ -20,14 +20,10 @@ public class DeleteOrderCommandHandler : IRequestHandler<DeleteOrderCommand>
     public async Task<Unit> Handle(DeleteOrderCommand request, CancellationToken cancellationToken)
     {
         var orderEntity = await _orderRepository.GetByIdAsync(request.Id);
-
         if (orderEntity == null) throw new NotFoundException(nameof(Order), request.Id);
-
-        _orderRepository.DeleteAsync(orderEntity);
+        await _orderRepository.DeleteAsync(orderEntity);
         _orderRepository.SaveChangesAsync();
-
         _logger.Information($"Order {orderEntity.Id} was successfully deleted.");
-
         return Unit.Value;
     }
 }

@@ -3,7 +3,7 @@ using MediatR;
 using Ordering.Application.Common.Exceptions;
 using Ordering.Application.Common.Interfaces;
 using Ordering.Application.Common.Models;
-using Ordering.Domain.Enities;
+using Ordering.Domain.Entities;
 using Serilog;
 using Shared.SeedWork;
 
@@ -15,7 +15,8 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Api
     private readonly IMapper _mapper;
     private readonly ILogger _logger;
 
-    public UpdateOrderCommandHandler(IOrderRepository orderRepository, IMapper mapper,
+    public UpdateOrderCommandHandler(IOrderRepository orderRepository,
+        IMapper mapper,
         ILogger logger)
     {
         _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
@@ -34,9 +35,7 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, Api
 
         orderEntity = _mapper.Map(request, orderEntity);
         var updatedOrder = await _orderRepository.UpdateOrderAsync(orderEntity);
-
-        _orderRepository.SaveChangesAsync();
-
+        await _orderRepository.SaveChangesAsync();
         _logger.Information($"Order {request.Id} was successfully updated.");
         var result = _mapper.Map<OrderDto>(updatedOrder);
 

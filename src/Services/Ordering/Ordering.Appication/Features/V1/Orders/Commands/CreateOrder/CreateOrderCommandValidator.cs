@@ -7,8 +7,8 @@ public class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>
     public CreateOrderCommandValidator()
     {
         RuleFor(p => p.UserName)
-            .NotEmpty().WithMessage("{PropertyName} is required.")
+            .NotEmpty().WithMessage("{UserName} is required.")
             .NotNull()
-            .MaximumLength(50).WithMessage("{PropertyName} must not exceed 50 characters.");
+            .MaximumLength(50).WithMessage("{UserName} must not exceed 50 characters.");
     }
 }
