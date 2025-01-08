@@ -1,13 +1,12 @@
-﻿using MediatR;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Net;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Ordering.Application.Common.Models;
-using Ordering.Application.Features.V1.Orders.Commands.CreateOrder;
 using Ordering.Application.Features.V1.Orders.Commands.DeleteOrder;
 using Ordering.Application.Features.V1.Orders.Commands.UpdateOrder;
 using Ordering.Application.Features.V1.Orders.Queries.GetOrders;
 using Shared.SeedWork;
-using System.ComponentModel.DataAnnotations;
-using System.Net;
 
 namespace Ordering.API.Controllers;
 
@@ -26,8 +25,10 @@ public class OrdersController : ControllerBase
     {
         public const string GetOrders = nameof(GetOrders);
         public const string GetOrdersPagination = nameof(GetOrdersPagination);
-        public const string CreateOrder = nameof(CreateOrder);
+
+        // public const string CreateOrder = nameof(CreateOrder);
         public const string UpdateOrder = nameof(UpdateOrder);
+
         public const string DeleteOrder = nameof(DeleteOrder);
     }
 
@@ -42,13 +43,13 @@ public class OrdersController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost(Name = RouteNames.CreateOrder)]
-    [ProducesResponseType(typeof(ApiResult<long>), (int)HttpStatusCode.OK)]
-    public async Task<ActionResult<ApiResult<long>>> CreateOrder([FromBody] CreateOrderCommand command)
-    {
-        var result = await _mediator.Send(command);
-        return Ok(result);
-    }
+    // [HttpPost(Name = RouteNames.CreateOrder)]
+    // [ProducesResponseType(typeof(ApiResult<long>), (int)HttpStatusCode.OK)]
+    // public async Task<ActionResult<ApiResult<long>>> CreateOrder([FromBody] CreateOrderCommand command)
+    // {
+    //     var result = await _mediator.Send(command);
+    //     return Ok(result);
+    // }
 
     [HttpPut("{id:long}", Name = RouteNames.UpdateOrder)]
     [ProducesResponseType(typeof(ApiResult<OrderDto>), (int)HttpStatusCode.OK)]

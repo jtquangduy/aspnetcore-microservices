@@ -10,7 +10,6 @@
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="13.0.1" />
         <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.5" />
-        <PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
         <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.0" />
     </ItemGroup>
@@ -20,7 +19,6 @@
         <ProjectReference Include="..\..\BuildingBlocks\Contracts\Contracts.csproj" />
         <ProjectReference Include="..\..\BuildingBlocks\EventBus\EventBus.Messages\EventBus.Messages.csproj" />
         <ProjectReference Include="..\..\BuildingBlocks\Infrastructure\Infrastructure.csproj" />
-        <ProjectReference Include="..\Ordering\Ordering.API\Ordering.API.csproj" />
     </ItemGroup>
 
 </Project>

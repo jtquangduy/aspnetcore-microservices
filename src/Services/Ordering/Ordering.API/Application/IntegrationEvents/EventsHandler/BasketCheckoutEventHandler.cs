@@ -24,7 +24,7 @@ public class BasketCheckoutEventHandler : IConsumer<BasketCheckoutEvent>
     {
         var command = _mapper.Map<CreateOrderCommand>(context.Message);
         var result = await _mediator.Send(command);
-        _logger.Information("BasketCheckoutEvent consumed successfully." +
+        _logger.Information("BasketCheckoutEvent consumed successfully. " +
                             "Order is created with Id: {newOrderId}", result.Data);
     }
 }

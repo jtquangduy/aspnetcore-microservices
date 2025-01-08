@@ -33,14 +33,15 @@ public static class ServiceExtensions
 
         services.AddMassTransit(config =>
         {
+            config.AddConsumersFromNamespaceContaining<BasketCheckoutEventHandler>();
+
             config.UsingRabbitMq((ctx, cfg) =>
             {
                 cfg.Host(mqConnection);
-                cfg.ReceiveEndpoint("basket-checkout-queue", c =>
-                {
-                    c.ConfigureConsumer<BasketCheckoutEventHandler>(ctx);
-                });
-                // cfg.ConfigureEndpoints(ctx);
+                // cfg.ReceiveEndpoint("basket-checkout-queue",
+                //     c => { c.ConfigureConsumer<BasketCheckoutEventHandler>(ctx); });
+
+                cfg.ConfigureEndpoints(ctx);
             });
         });
     }
