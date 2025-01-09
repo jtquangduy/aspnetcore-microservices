@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using System.Reflection;
+﻿using System.Reflection;
+using AutoMapper;
 
 namespace Ordering.Application.Common.Mappings
 {
