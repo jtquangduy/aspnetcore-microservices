@@ -34,29 +34,30 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Api
         _logger.Information($"BEGIN: {MethodName} - Username: {request.UserName}");
         var orderEntity = _mapper.Map<Order>(request);
         var addedOrder = await _orderRepository.CreateOrderAsync(orderEntity);
+        addedOrder.AddedOrder();
         await _orderRepository.SaveChangesAsync();
         _logger.Information($"Order {addedOrder.Id} is successfully created.");
-        SendEmailAsync(addedOrder, cancellationToken);
+        //SendEmailWhenCreatedAsync(addedOrder, cancellationToken);
         _logger.Information($"END: {MethodName} - Username: {request.UserName}");
         return new ApiSuccessResult<long>(addedOrder.Id);
     }
 
-    private async Task SendEmailAsync(Order order, CancellationToken cancellationToken)
-    {
-        var emailRequest = new MailRequest
-        {
-            ToAddress = order.EmailAddress,
-            Body = "Order was created.",
-            Subject = "Order was created"
-        };
-        try
-        {
-            await _emailService.SendEmailAsync(emailRequest, cancellationToken);
-            _logger.Information($"Sent Created Order to email {order.EmailAddress}");
-        }
-        catch (Exception ex)
-        {
-            _logger.Error($"Order {order.Id} failed due to an error with the email service: {ex.Message}");
-        }
-    }
+    //private async Task SendEmailWhenCreatedAsync(Order order, CancellationToken cancellationToken)
+    //{
+    //    var emailRequest = new MailRequest
+    //    {
+    //        Body = "Order was created.",
+    //        Subject = "Order was created",
+    //        ToAddress = order.EmailAddress
+    //    };
+    //    try
+    //    {
+    //        await _emailService.SendEmailAsync(emailRequest, cancellationToken);
+    //        _logger.Information($"Sent Created Order to email {order.EmailAddress}");
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        _logger.Error($"Order {order.Id} failed due to an error with the email service: {ex.Message}");
+    //    }
+    //}
 }
