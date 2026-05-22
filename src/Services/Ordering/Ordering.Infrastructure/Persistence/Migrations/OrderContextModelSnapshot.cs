@@ -22,7 +22,7 @@ namespace Ordering.Infrastructure.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Ordering.Domain.Enities.Order", b =>
+            modelBuilder.Entity("Ordering.Domain.Entities.Order", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -32,6 +32,9 @@ namespace Ordering.Infrastructure.Persistence.Migrations
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("DocumentNo")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("EmailAddress")
                         .IsRequired()
@@ -43,7 +46,7 @@ namespace Ordering.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("InvoiceAddress")
                         .IsRequired()
-                        .HasColumnType("nvarchar(MAX)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset?>("LastModifiedDate")
                         .HasColumnType("datetimeoffset");
@@ -54,7 +57,7 @@ namespace Ordering.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("ShippingAddress")
                         .IsRequired()
-                        .HasColumnType("nvarchar(MAX)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()

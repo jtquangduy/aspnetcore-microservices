@@ -1,4 +1,4 @@
-﻿version: '3.8'
+version: '3.8'
 
 services:
   #database section
@@ -39,7 +39,7 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
   
   
   #basketdb: redis
@@ -144,8 +144,10 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
       - "CacheSettings:ConnectionString=basketdb:6379"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
     depends_on:
       - basketdb
+      - rabbitmq
     ports:
       - "6004:80"
     restart: always
@@ -156,8 +158,10 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
       - "ConnectionStrings:DefaultConnectionString=Server=orderdb;Database=OrderDb;User Id=sa;Password=Passw0rd!;Persist Security Info=False;Trusted_Connection=False;Encrypt=False;TrustServerCertificate=True;MultipleActiveResultSets=True"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
     depends_on:
       - orderdb
+      - rabbitmq
     ports:
       - "6005:80"
     restart: always

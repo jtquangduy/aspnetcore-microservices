@@ -1,7 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Net;
+using AutoMapper;
 using Basket.API.Entities;
 using Basket.API.Repositories.Interfaces;
+using EventBus.Messages.IntegrationEvent.Events;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using ILogger = Serilog.ILogger;
@@ -13,12 +16,16 @@ namespace Basket.API.Controllers;
 public class BasketsController : ControllerBase
 {
     private readonly IBasketRepository _basketRepository;
+    private readonly IPublishEndpoint _publishEndpoint;
+    private readonly IMapper _mapper;
     private readonly ILogger _logger;
 
-    public BasketsController(IBasketRepository basketRepository, ILogger logger)
+    public BasketsController(IBasketRepository basketRepository, ILogger logger, IPublishEndpoint publishEndpoint, IMapper mapper)
     {
         _basketRepository = basketRepository;
         _logger = logger;
+        _publishEndpoint = publishEndpoint;
+        _mapper = mapper;
     }
 
     [HttpGet("{username}", Name = "GetBasket")]
@@ -57,5 +64,25 @@ public class BasketsController : ControllerBase
         var result = await _basketRepository.DeleteBasketFromUserName(username);
         _logger.Information($"END: DeleteBasket {username}");
         return Ok(result);
+    }
+
+    [Route("[action]")]
+    [HttpPost]
+    [ProducesResponseType((int)HttpStatusCode.Accepted)]
+    [ProducesResponseType((int)HttpStatusCode.NotFound)]
+    public async Task<IActionResult> CheckOut([FromBody] BasketCheckout basketCheckout)
+    {
+        var basket = await _basketRepository.GetBasketByUserName(basketCheckout.UserName);
+        if (basket == null) return NotFound();
+
+        // publish checkout event to Eventbus Message
+        var eventMessage = _mapper.Map<BasketCheckoutEvent>(basketCheckout);
+        eventMessage.TotalPrice = basket.TotalPrice;
+        _publishEndpoint.Publish(eventMessage);
+
+        // remove the basket
+        await _basketRepository.DeleteBasketFromUserName(basketCheckout.UserName);
+
+        return Accepted();
     }
 }

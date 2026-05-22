@@ -12,7 +12,7 @@ Log.Logger = new LoggerConfiguration()
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog(Serilogger.Configure);
 
-Log.Information("Start Ordering API up");
+Log.Information($"Start {builder.Environment.ApplicationName} up");
 
 try
 {
@@ -21,6 +21,9 @@ try
     builder.Services.AddConfigurationSettings(builder.Configuration);
     builder.Services.AddApplicationServices();
     builder.Services.AddInfrastructureServices(builder.Configuration);
+
+    // Configure Mass Transit
+    builder.Services.ConfigureMassTransit();
 
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -34,8 +37,8 @@ try
     {
         app.UseSwagger();
         app.UseSwaggerUI(c =>
-            c.SwaggerEndpoint("/swagger/v1/swagger.json",
-                "Swagger Order API v1"));
+                c.SwaggerEndpoint("/swagger/v1/swagger.json",
+                    "Swagger Order API v1"));
     }
 
     // Initialise and seed database
@@ -66,6 +69,6 @@ catch (Exception ex)
 }
 finally
 {
-    Log.Information("Shut down Ordering API complete");
+    Log.Information($"Shut down {builder.Environment.ApplicationName} complete");
     Log.CloseAndFlush();
 }
